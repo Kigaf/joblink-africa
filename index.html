@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore jobs in Kenya and abroad, including remote work, internships and international opportunities.">
+  <title>JobLink Africa — Find a job. Build your future.</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="JobLink Africa home"><span class="logo">JL</span><span>JobLink <b>Africa</b><small>Your next opportunity starts here</small></span></a>
+  <nav><a href="#jobs">Find jobs</a><a href="#categories">Categories</a><a href="#about">About</a><a href="admin.html">Admin</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy"><span class="eyebrow">KENYA · AFRICA · WORLDWIDE</span><h1>Find a job.<br><em>Build your future.</em></h1><p>Explore career opportunities, internships, remote roles and international vacancies in one place.</p><div class="pills"><span>Kenya jobs</span><span>Jobs abroad</span><span>Remote work</span><span>Visa sponsorship</span></div></div>
+    <div class="hero-art" aria-hidden="true"><div class="orbit o1"></div><div class="orbit o2"></div><div class="briefcase">↗</div><div class="float f1">✓ Source links</div><div class="float f2">🌍 Global opportunities</div></div>
+  </section>
+  <section class="search-panel" aria-label="Search jobs">
+    <form id="filters" class="filters">
+      <label class="keyword">Job title or keyword<input id="q" type="search" placeholder="e.g. ICT Officer, Nurse, Accountant"></label>
+      <label>Country<select id="country"><option value="">All countries</option></select></label>
+      <label>Category<select id="category"><option value="">All categories</option></select></label>
+      <label>Job type<select id="type"><option value="">Any job type</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Temporary</option><option>Internship</option><option>Graduate programme</option><option>Freelance</option><option>Volunteer</option></select></label>
+      <label>Work mode<select id="mode"><option value="">Any mode</option><option>On-site</option><option>Hybrid</option><option>Remote</option></select></label>
+      <label class="check"><input id="sponsor" type="checkbox"> Visa sponsorship indicated</label>
+      <button class="btn primary" type="submit">Search jobs <span>→</span></button>
+      <button class="btn light" id="clear" type="button">Clear filters</button>
+    </form>
+  </section>
+  <section class="section" id="categories"><div class="section-head"><div><span class="eyebrow">EXPLORE CAREERS</span><h2>Find your category</h2></div><p>Opportunities for every skill and career stage.</p></div><div id="categoryGrid" class="category-grid"></div></section>
+  <section class="section jobs-section" id="jobs"><div class="section-head"><div><span class="eyebrow">OPPORTUNITIES</span><h2>Job listings</h2></div><span id="resultCount" class="count"></span></div><div id="demoNotice" class="notice"><b>Preview mode:</b> Sample listings are illustrative, not real vacancies. Configure Supabase and publish verified vacancies from the admin dashboard.</div><div id="jobList" class="job-list" aria-live="polite"></div><div id="pagination" class="pagination"></div></section>
+  <section class="safety"><div>🔎 <span><b>Check the original source</b><small>Always verify vacancies on the employer's official website.</small></span></div><div>🛡️ <span><b>Watch out for scams</b><small>Never pay someone who promises a guaranteed job or visa.</small></span></div><div>🌍 <span><b>Local and global</b><small>Explore opportunities across countries and industries.</small></span></div></section>
+  <section class="about" id="about"><span class="eyebrow">ABOUT JOBLINK AFRICA</span><h2>Connecting talent with opportunity.</h2><p>JobLink Africa is designed to make it easier to discover opportunities in Kenya and around the world. Each listing should show its source and direct applicants to the original application page. We do not guarantee hiring outcomes.</p></section>
+</main>
+<footer><a class="footer-brand" href="index.html">JobLink Africa</a><p>Connecting talent with opportunity.</p><div class="footer-links"><a href="#about">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:hello@example.com">Contact</a></div><small>© <span id="year"></span> JobLink Africa · Update the contact email before launch.</small></footer>
+<div class="modal" id="jobModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden><div class="modal-card"><button class="modal-close" id="modalClose" aria-label="Close">×</button><div id="modalContent"></div></div></div>
+<script src="assets/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/app.js"></script>
+</body></html>
