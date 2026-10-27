@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Job Details | JobLink Africa</title>
+  <meta name="description" content="Explore job opportunities in Kenya and worldwide on JobLink Africa.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#123b65">
+
+  <link rel="stylesheet" href="assets/style.css">
+
+  <style>
+    body { margin: 0; background: #f5f7fb; color: #182638; font-family: Arial, sans-serif; }
+    .job-page { max-width: 850px; margin: 35px auto; padding: 24px; }
+    .job-card { background: white; border-radius: 14px; padding: 28px; box-shadow: 0 4px 18px #0000000d; }
+    .job-card h1 { margin-top: 0; line-height: 1.3; }
+    .job-meta { color: #526477; line-height: 1.9; }
+    .job-description { line-height: 1.8; overflow-wrap: anywhere; }
+    .apply-button { display: inline-block; padding: 13px 22px; background: #1265cc; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 18px; }
+    .back-link { display: inline-block; margin-bottom: 18px; }
+    .notice { padding: 14px; background: #fff4d6; border-radius: 8px; }
+  </style>
+</head>
+
+<body>
+  <main class="job-page">
+    <a class="back-link" href="index.html">← Back to all jobs</a>
+
+    <article class="job-card" id="jobContent" aria-live="polite">
+      <h1>Loading job details...</h1>
+      <p>Please wait while we retrieve this vacancy.</p>
+    </article>
+  </main>
+
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const content = document.getElementById('jobContent');
+    const params = new URLSearchParams(window.location.search);
+    const jobId = params.get('id');
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    function firstValue(job, names, fallback = '') {
+      for (const name of names) {
+        if (job[name] !== undefined && job[name] !== null && job[name] !== '') {
+          return job[name];
+        }
+      }
+      return fallback;
+    }
+
+    function safeURL(value) {
+      try {
+        const url = new URL(value);
+        return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+      } catch {
+        return '';
+      }
+    }
+
+    function showError(message) {
+      content.innerHTML =
+        '<h1>Job details unavailable</h1><p>' +
+        escapeHTML(message) +
+        '</p><p><a href="index.html">Return to JobLink Africa</a></p>';
+    }
+
+    async function loadJob() {
+      if (!jobId) {
+        showError('No job was selected. Return to the job listings and choose a vacancy.');
+        return;
+      }
+
+      const config = window.JOBLINK_CONFIG;
+      if (!config?.SUPABASE_URL || !config?.SUPABASE_ANON_KEY) {
+        showError('The website configuration could not be loaded.');
+        return;
+      }
+
+      try {
+        const client = window.supabase.createClient(
+          config.SUPABASE_URL,
+          config.SUPABASE_ANON_KEY
+        );
+
+        const { data: job, error } = await client
+          .from('jobs')
+          .select('*')
+          .eq('id', jobId)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!job) {
+          showError('This vacancy could not be found or is no longer available.');
+          return;
+        }
+
+        const title = firstValue(job, ['title', 'job_title'], 'Job opportunity');
+        const company = firstValue(job, ['company', 'company_name', 'employer'], 'Employer not specified');
+        const location = firstValue(job, ['location', 'city'], '');
+        const country = firstValue(job, ['country'], '');
+        const category = firstValue(job, ['category'], '');
+        const type = firstValue(job, ['type', 'job_type', 'employment_type'], '');
+        const mode = firstValue(job, ['mode', 'work_mode'], '');
+        const description = firstValue(job, ['description', 'job_description'], '');
+        const requirements = firstValue(job, ['requirements', 'qualifications'], '');
+        const experience = firstValue(job, ['experience', 'experience_required'], '');
+        const salary = firstValue(job, ['salary'], '');
+        const deadline = firstValue(job, ['deadline', 'application_deadline', 'valid_through'], '');
+        const datePosted = firstValue(job, ['date_posted', 'created_at'], '');
+        const applyURL = safeURL(firstValue(job, [
+          'application_url', 'apply_url', 'application_link', 'source_url'
+        ], ''));
+
+        document.title = `${title} at ${company} | JobLink Africa`;
+        const meta = document.querySelector('meta[name="description"]');
+        meta.content = `View details and application information for ${title} at ${company}${country ? ' in ' + country : ''} on JobLink Africa.`;
+
+        content.innerHTML = `
+          <h1>${escapeHTML(title)}</h1>
+          <p class="job-meta">
+            <strong>Employer:</strong> ${escapeHTML(company)}<br>
+            ${location ? '<strong>Location:</strong> ' + escapeHTML(location) + '<br>' : ''}
+            ${country ? '<strong>Country:</strong> ' + escapeHTML(country) + '<br>' : ''}
+            ${category ? '<strong>Category:</strong> ' + escapeHTML(category) + '<br>' : ''}
+            ${type ? '<strong>Job type:</strong> ' + escapeHTML(type) + '<br>' : ''}
+            ${mode ? '<strong>Work mode:</strong> ' + escapeHTML(mode) + '<br>' : ''}
+            ${experience ? '<strong>Experience:</strong> ' + escapeHTML(experience) + '<br>' : ''}
+            ${salary ? '<strong>Salary:</strong> ' + escapeHTML(salary) + '<br>' : ''}
+            ${datePosted ? '<strong>Date posted:</strong> ' + escapeHTML(String(datePosted).slice(0, 10)) + '<br>' : ''}
+            ${deadline ? '<strong>Application deadline:</strong> ' + escapeHTML(String(deadline).slice(0, 10)) : ''}
+          </p>
+          <hr>
+          <h2>Job description</h2>
+          <div class="job-description">${escapeHTML(description).replace(/\n/g, '<br>') || 'Please consult the employer’s official advert for the full job description.'}</div>
+          ${requirements ? '<h2>Requirements</h2><div class="job-description">' + escapeHTML(requirements).replace(/\n/g, '<br>') + '</div>' : ''}
+          ${applyURL ? '<a class="apply-button" href="' + escapeHTML(applyURL) + '" target="_blank" rel="noopener noreferrer">Apply for this job</a>' : '<p class="notice">An application link has not been provided. Check the employer’s official website before applying.</p>'}
+        `;
+
+        // Add JobPosting structured data only when key details are available.
+        if (title && company && description && datePosted && country) {
+          const postedDate = String(datePosted).slice(0, 10);
+          const deadlineDate = deadline ? String(deadline).slice(0, 10) : '';
+
+          const schema = {
+            '@context': 'https://schema.org',
+            '@type': 'JobPosting',
+            title,
+            description: `<p>${escapeHTML(description).replace(/\n/g, '</p><p>')}</p>`,
+            datePosted: postedDate,
+            hiringOrganization: {
+              '@type': 'Organization',
+              name: company
+            },
+            jobLocation: {
+              '@type': 'Place',
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: location || country,
+                addressCountry: country
+              }
+            }
+          };
+
+          if (deadlineDate) schema.validThrough = deadlineDate;
+          if (applyURL) schema.url = applyURL;
+
+          const script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.textContent = JSON.stringify(schema);
+          document.head.appendChild(script);
+        }
+      } catch (error) {
+        console.error('Unable to load job:', error);
+        showError('We could not retrieve this job. Please check the website configuration and database permissions.');
+      }
+    }
+
+    loadJob();
+  </script>
+</body>
+</html>
