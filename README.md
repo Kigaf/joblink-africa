@@ -160,13 +160,13 @@ The public `ai.html` page provides an AI assistant for CV guidance, cover letter
 
 ## Member accounts
 
-The member account page is `account.html`. It uses Supabase Auth email/password sign-up and sign-in, stores optional profile details in `joblink_profiles`, and stores saved published job IDs in `joblink_saved_jobs`. Passwords are handled by Supabase Auth and are never written to a custom profile table.
+The member account page is `account.html`. It uses Supabase Auth email/password and Google OAuth sign-in, password recovery and confirmation email resend, stores optional profile details in `joblink_profiles`, and stores saved published job IDs in `joblink_saved_jobs`. Passwords are handled by Supabase Auth and are never written to a custom profile table.
 
 ### Activate accounts
 
 1. Open the Supabase SQL Editor for this project: https://supabase.com/dashboard/project/ltwnjnrxqdexnwlixpgt/sql/new
 2. Copy and run the migration in `supabase/accounts.sql`: https://github.com/Kigaf/joblink-africa/blob/main/supabase/accounts.sql
-3. In Supabase Authentication settings, configure the Site URL as `https://kigaf.github.io/joblink-africa` and add `https://kigaf.github.io/joblink-africa/**` to the allowed redirect URLs. Keep email confirmation enabled for production and configure SMTP so confirmation messages can be delivered reliably.
+3. In Supabase Authentication → URL Configuration, configure the Site URL as `https://kigaf.github.io/joblink-africa` and add `https://kigaf.github.io/joblink-africa/**` to the allowed redirect URLs. Keep email confirmation enabled for production and configure SMTP so confirmation messages can be delivered reliably.\n4. To enable Google sign-in, open Google Cloud Console, create/select a project, configure the OAuth consent screen, create an OAuth Client ID of type Web application, and add Supabase's callback URL shown under Authentication → Providers → Google (usually `https://ltwnjnrxqdexnwlixpgt.supabase.co/auth/v1/callback`) as an Authorized redirect URI in Google Cloud. Copy the Google Client ID and Client Secret into Supabase Authentication → Providers → Google, enable the provider and save. In Google Cloud, add `https://kigaf.github.io` as an authorized JavaScript origin if requested.\n5. Test Google sign-in at `https://kigaf.github.io/joblink-africa/account.html`.
 4. Open https://kigaf.github.io/joblink-africa/account.html, create a test account using an email address you control, confirm the email if prompted, and sign in.
 5. Save a published vacancy from the homepage while signed in. It should appear under My saved jobs.
 
@@ -174,4 +174,4 @@ The database migration enables row-level security so each member can read/update
 
 ### Before public launch
 
-Configure a custom SMTP provider and test email confirmation and password recovery; a password recovery flow is not included in this first version. Consider adding verified-email requirements, CAPTCHA/rate limiting, account deletion/export tools, and a clear retention process before marketing member accounts widely. Do not expose Supabase service-role keys in the website.
+Configure a custom SMTP provider and test email confirmation and password recovery. Configure and test the Google OAuth provider before advertising Google sign-in. Consider adding verified-email requirements, CAPTCHA/rate limiting, account deletion/export tools, and a clear retention process before marketing member accounts widely. Do not expose Supabase service-role keys in the website.
