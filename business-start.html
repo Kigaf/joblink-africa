@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore small business ideas, choose a business category and create a practical startup plan with notes.">
+<title>Start a Business | JobLink Africa</title>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/business-start.css">
+</head>
+<body>
+<header class="topbar">
+<a class="brand" href="index.html"><span class="logo">JL</span><span>JobLink <b>Africa</b><small>Your next opportunity starts here</small></span></a>
+<nav><a href="index.html">Find jobs</a><a href="career-advice.html">Career advice</a><a href="business-start.html" aria-current="page">Start a business</a><a href="resources.html">Learning Resources</a><a href="account.html">My Account</a></nav>
+</header>
+<main class="biz-wrap">
+<section class="biz-hero"><span class="eyebrow">YOUR IDEA · YOUR PLAN · YOUR NEXT STEP</span><h1>Turn your business idea<br><em>into a clear plan.</em></h1><p>Explore business categories, compare ideas and write down the steps, costs and notes you need before you start.</p><a class="btn primary" href="#planner">Create my business plan →</a></section>
+<section class="biz-section"><div class="section-head"><div><span class="eyebrow">FIND YOUR STARTING POINT</span><h2>Explore business categories</h2></div><p>Choose an area that matches your skills, interests and available resources.</p></div><div class="biz-categories" id="bizCategories">
+<article class="biz-category"><div class="biz-icon">🥘</div><h3>Food & catering</h3><p>Snacks, packed lunches, catering, baking and food delivery.</p><button data-category="Food & catering">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">🛍️</div><h3>Retail & online selling</h3><p>Clothing, household goods, cosmetics, thrift and online shops.</p><button data-category="Retail & online selling">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">🌱</div><h3>Agriculture</h3><p>Vegetables, poultry, eggs, seedlings, fish and value addition.</p><button data-category="Agriculture">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">💻</div><h3>Digital & technology</h3><p>Graphic design, web services, printing, digital marketing and repairs.</p><button data-category="Digital & technology">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">🧹</div><h3>Home & personal services</h3><p>Laundry, cleaning, beauty, barbering, tailoring and home care.</p><button data-category="Home & personal services">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">🚚</div><h3>Transport & delivery</h3><p>Courier services, errands, delivery and transport support.</p><button data-category="Transport & delivery">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">📚</div><h3>Education & training</h3><p>Tutoring, skills training, educational materials and childcare.</p><button data-category="Education & training">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">🏠</div><h3>Construction & property</h3><p>Repairs, painting, plumbing, supplies and property services.</p><button data-category="Construction & property">Use this category</button></article>
+<article class="biz-category"><div class="biz-icon">🎨</div><h3>Creative & events</h3><p>Photography, decoration, events, crafts and entertainment.</p><button data-category="Creative & events">Use this category</button></article>
+</div></section>
+<section class="biz-section idea-section"><div><span class="eyebrow">IDEAS TO RESEARCH</span><h2>Examples of small business ideas</h2><p class="muted">These are starting points, not guaranteed-profit opportunities. Check local demand, competition, licences and costs before investing.</p></div><div class="idea-grid">
+<div><b>Low-equipment ideas</b><ul><li>Mandazi or snack orders</li><li>Second-hand clothes resale</li><li>House cleaning service</li><li>Social media design service</li></ul></div>
+<div><b>Skills-based ideas</b><ul><li>Computer lessons or tutoring</li><li>Phone and computer support</li><li>Photography and event design</li><li>Tailoring and clothing repairs</li></ul></div>
+<div><b>Growing or production ideas</b><ul><li>Vegetable seedlings</li><li>Kitchen garden produce</li><li>Egg production</li><li>Liquid soap making</li></ul></div></div></section>
+<section class="biz-section planner" id="planner"><div class="section-head"><div><span class="eyebrow">MAKE IT PRACTICAL</span><h2>My business plan & notes</h2></div><p>Your entries are saved in this browser on this device.</p></div>
+<form id="businessForm" class="plan-grid">
+<label>Business name<input id="businessName" placeholder="e.g. John's Fresh Bites"></label>
+<label>Business category<select id="businessCategory"><option value="">Choose a category</option><option>Food & catering</option><option>Retail & online selling</option><option>Agriculture</option><option>Digital & technology</option><option>Home & personal services</option><option>Transport & delivery</option><option>Education & training</option><option>Construction & property</option><option>Creative & events</option><option>Other</option></select></label>
+<label class="wide">What product or service will you offer?<textarea id="businessOffer" rows="2" placeholder="Describe what customers will pay you for"></textarea></label>
+<label>Who are your customers?<input id="businessCustomers" placeholder="e.g. families, students, offices"></label>
+<label>Where will you operate?<input id="businessLocation" placeholder="Town, estate or online"></label>
+<label>Estimated starting budget (KSh)<input id="businessBudget" type="number" min="0" placeholder="e.g. 5000"></label>
+<label>How will you reach customers?<input id="businessMarketing" placeholder="WhatsApp, referrals, posters..."></label>
+<label class="wide">First steps<textarea id="businessSteps" rows="3" placeholder="1. Research demand&#10;2. Compare suppliers&#10;3. Test with a few customers"></textarea></label>
+<label class="wide">Extra notes<textarea id="businessNotes" rows="5" placeholder="Write supplier contacts, prices to check, questions, ideas and lessons..."></textarea></label>
+<div class="wide plan-actions"><button class="btn primary" type="submit">Save my plan</button><button class="btn light" id="printPlan" type="button">Print / save as PDF</button><button class="btn light" id="clearPlan" type="button">Clear plan</button><span id="saveStatus" role="status"></span></div>
+</form>
+<div class="checklist"><h3>Startup checklist</h3><p class="muted">Tick items as you complete them. Your progress is saved on this device.</p>
+<label><input type="checkbox" data-task="customer"> Talk to potential customers and confirm demand</label>
+<label><input type="checkbox" data-task="competitors"> Research competitors and pricing</label>
+<label><input type="checkbox" data-task="costs"> List startup and monthly operating costs</label>
+<label><input type="checkbox" data-task="suppliers"> Identify and compare suppliers</label>
+<label><input type="checkbox" data-task="permits"> Check county permits, licences and tax obligations</label>
+<label><input type="checkbox" data-task="test"> Test the product or service on a small scale</label>
+<label><input type="checkbox" data-task="records"> Set up a simple sales and expense record</label>
+</div>
+</section>
+<section class="biz-help"><h2>Start small. Learn. Improve.</h2><p>Do not borrow or spend heavily before testing whether people will buy. Keep business money records separate, understand the risks and seek advice from relevant county offices or qualified professionals when needed.</p><a href="https://wa.me/254757793495?text=Hello%20JobLink%20Africa%2C%20I%20would%20like%20to%20enquire%20about%20business%20planning." target="_blank" rel="noopener">Ask JobLink Africa a question on WhatsApp</a></section>
+</main>
+<footer><a class="footer-brand" href="index.html">JobLink Africa</a><p>Connecting people with opportunities.</p><div class="footer-links"><a href="index.html">Find jobs</a><a href="career-advice.html">Career advice</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div><small>© <span id="year"></span> JobLink Africa</small></footer>
+<script src="assets/business-start.js"></script>
+</body></html>
