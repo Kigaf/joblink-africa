@@ -23,6 +23,11 @@ OFFICIAL_KE_SOURCES = [
     {"name": "Central Bank of Kenya", "url": "https://careers.centralbank.go.ke/", "domain": "careers.centralbank.go.ke"},
     {"name": "Airtel Kenya", "url": "https://www.airtelkenya.com/ke/about/Careers", "domain": "airtelkenya.com"},
     {"name": "AirKenya", "url": "https://airkenya.com/careers/", "domain": "airkenya.com"},
+    {"name": "Equity Bank Kenya", "url": "https://equitybank.taleo.net/careersection/int_new/jobsearch.ftl?ftlcompclass=LoginComponent&lang=en", "domain": "equitybank.taleo.net", "allow_unrelated_job_titles": True},
+    {"name": "Co-operative Bank of Kenya", "url": "https://www.co-opbank.co.ke/careers/", "domain": "www.co-opbank.co.ke", "allow_unrelated_job_titles": True},
+    {"name": "Nation Media Group", "url": "https://www.nationmedia.com/careers/", "domain": "www.nationmedia.com", "allow_unrelated_job_titles": True},
+    {"name": "Jubilee Insurance", "url": "https://jubileeinsurance.com/ke/career-opportunities/", "domain": "jubileeinsurance.com", "allow_unrelated_job_titles": True},
+    {"name": "National Bank of Kenya", "url": "https://nationalbank.co.ke/about-us/careers", "domain": "nationalbank.co.ke", "allow_unrelated_job_titles": True},
 ]
 
 JOB_WORDS = re.compile(r"\b(vacanc(?:y|ies)|job|career|recruit|position|advert|internship|employment|shortlist)\b", re.I)
@@ -82,7 +87,11 @@ def official_vacancy_records():
                 if not title or len(title) < 8 or len(title) > 220:
                     continue
                 if not JOB_WORDS.search(title) and not re.search(r"\b(PSC|TSC|NPSC|JSC)\b", title, re.I):
-                    continue
+                    # Career pages often show job titles without the words "job" or "vacancy".
+                    card = anchor.find_parent(["article", "li", "tr"])
+                    if not (source.get("allow_unrelated_job_titles") and card and
+                            (card.find(["h2", "h3", "h4", "h5"]) or card.name == "tr")):
+                        continue
                 if IGNORE_WORDS.fullmatch(title):
                     continue
                 href = urljoin(response.url, anchor["href"].strip())
