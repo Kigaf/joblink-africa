@@ -156,3 +156,22 @@ The public `ai.html` page provides an AI assistant for CV guidance, cover letter
 - Users should not submit passwords, national ID numbers, financial details, M-PESA PINs or sensitive documents.
 - AI output can be wrong. Users must verify vacancy details and application instructions with the original employer. The assistant does not search JobLink's live vacancies or guarantee hiring, sponsorship or visa outcomes.
 - The assistant's AI requests may incur OpenAI API charges separate from a ChatGPT subscription.
+
+
+## Member accounts
+
+The member account page is `account.html`. It uses Supabase Auth email/password sign-up and sign-in, stores optional profile details in `joblink_profiles`, and stores saved published job IDs in `joblink_saved_jobs`. Passwords are handled by Supabase Auth and are never written to a custom profile table.
+
+### Activate accounts
+
+1. Open the Supabase SQL Editor for this project: https://supabase.com/dashboard/project/ltwnjnrxqdexnwlixpgt/sql/new
+2. Copy and run the migration in `supabase/accounts.sql`: https://github.com/Kigaf/joblink-africa/blob/main/supabase/accounts.sql
+3. In Supabase Authentication settings, configure the Site URL as `https://kigaf.github.io/joblink-africa` and add `https://kigaf.github.io/joblink-africa/**` to the allowed redirect URLs. Keep email confirmation enabled for production and configure SMTP so confirmation messages can be delivered reliably.
+4. Open https://kigaf.github.io/joblink-africa/account.html, create a test account using an email address you control, confirm the email if prompted, and sign in.
+5. Save a published vacancy from the homepage while signed in. It should appear under My saved jobs.
+
+The database migration enables row-level security so each member can read/update only their own profile and read/add/remove only their own saved-job records. Public visitors can continue saving jobs locally in their current browser, but only signed-in members sync saves to their account.
+
+### Before public launch
+
+Configure a custom SMTP provider and test email confirmation and password recovery; a password recovery flow is not included in this first version. Consider adding verified-email requirements, CAPTCHA/rate limiting, account deletion/export tools, and a clear retention process before marketing member accounts widely. Do not expose Supabase service-role keys in the website.
