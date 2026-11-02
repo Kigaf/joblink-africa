@@ -29,7 +29,7 @@ def clean(value):
     if isinstance(value, list):
         value = ", ".join(str(x) for x in value)
     value = html.unescape(re.sub(r"<[^>]+>", " ", str(value or "")))
-    return re.sub(r"\\s+", " ", value).strip()
+    return re.sub(r"\s+", " ", value).strip()
 
 def nested(obj, *path):
     for key in path:
@@ -170,7 +170,7 @@ def reliefweb_records(feed):
         location = ", ".join(x for x in [clean(city), clean(country_names)] if x)
         body = fields.get("body") or ""
         how_to_apply = fields.get("how_to_apply") or ""
-        summary = "\\n\\n".join(x for x in [clean(body), clean(how_to_apply)] if x)
+        summary = "\n\n".join(x for x in [clean(body), clean(how_to_apply)] if x)
         meta = " ".join([
             clean(nested(fields, "type", "name")),
             clean(nested(fields, "career_categories", "name")),
