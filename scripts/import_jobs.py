@@ -207,7 +207,6 @@ def untalent_records(feed):
         params["token"] = token
     records = []
     max_pages = max(1, min(int(feed.get("pages", 1)), 5))
-    page_size = int(feed.get("page_size", 100))
     for page in range(1, max_pages + 1):
         response = SESSION.get(endpoint, params={**params, "page": page}, timeout=45)
         if not response.ok:
@@ -239,8 +238,6 @@ def untalent_records(feed):
                 record["source"] = "UN Talent"
                 record["description"] += "\\n\\nSource: UN Talent. Follow the original listing link to review the vacancy and apply."
                 records.append(record)
-        if len(items) < page_size:
-            break
     return records
 
 def existing_urls(urls):
@@ -270,7 +267,9 @@ def main():
             continue
         kind = str(feed.get("type", "rss")).lower()
         try:
-            if kind == "rss":
+            if kind in ("rss", "untalent_rss"):
+                if kind == "untalent_rss":
+                    feed = {**feed, "name": feed.get("name", "UN Talent")}
                 candidates.extend(rss_records(feed))
             elif kind == "reliefweb":
                 candidates.extend(reliefweb_records(feed))
