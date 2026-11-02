@@ -18,11 +18,10 @@ import feedparser
 import requests
 
 SUPABASE_URL = os.environ["SUPABASE_URL"].rstrip("/")
-SERVICE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
+SERVICE_KEY = os.environ["SUPABASE_SECRET_KEY"]
 FEEDS_JSON = os.environ.get("JOB_FEEDS_JSON", "[]")
 HEADERS = {
     "apikey": SERVICE_KEY,
-    "Authorization": f"Bearer {SERVICE_KEY}",
     "Content-Type": "application/json",
     "Prefer": "return=representation",
 }
