@@ -13,6 +13,8 @@ from email.utils import parsedate_to_datetime
 import feedparser
 import requests
 
+from official_vacancy_sources import official_vacancy_records
+
 SUPABASE_URL = os.environ["SUPABASE_URL"].rstrip("/")
 SERVICE_KEY = os.environ["SUPABASE_SECRET_KEY"]
 FEEDS_JSON = os.environ.get("JOB_FEEDS_JSON", "[]")
@@ -262,6 +264,8 @@ def main():
         return
 
     candidates = []
+    # Monitor verified official Kenyan vacancy pages; results are always drafts.
+    candidates.extend(official_vacancy_records())
     for feed in feeds:
         if not isinstance(feed, dict):
             continue
