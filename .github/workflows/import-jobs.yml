@@ -1,0 +1,39 @@
+name: Import JobLink Africa vacancies
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Twice daily: 06:15 and 18:15 Kenya time (UTC+3)
+    - cron: "15 3,15 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: joblink-job-import
+  cancel-in-progress: false
+
+jobs:
+  import-jobs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Import approved RSS/Atom feeds as drafts
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          JOB_FEEDS_JSON: ${{ vars.JOB_FEEDS_JSON }}
+        run: python scripts/import_jobs.py
