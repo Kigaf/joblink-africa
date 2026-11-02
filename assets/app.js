@@ -71,7 +71,7 @@ function initPhaseOne(){
     $('jobAlertForm').addEventListener('submit',async e=>{
       e.preventDefault();const status=$('alertStatus');status.textContent='Submitting…';
       if(!client){status.textContent='Alerts registration is unavailable while the database is disconnected.';return}
-      const payload={email:$('alertEmail').value.trim(),country:$('alertCountry').value,category:$('alertCategory').value,active:true};
+      const payload={email:$('alertEmail').value.trim().toLowerCase(),country:$('alertCountry').value,category:$('alertCategory').value,active:true};
       const {error}=await client.from('job_alert_subscriptions').insert(payload);
       status.textContent=error?(error.code==='23505'?'This email already has an alert registration.':'Could not register right now. Please try again later.'):'Your alert preferences have been registered. Email notifications are not active yet.';
       if(!error)$('jobAlertForm').reset();
