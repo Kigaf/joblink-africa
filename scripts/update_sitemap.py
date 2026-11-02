@@ -73,6 +73,7 @@ def build_sitemap(jobs):
         f"{BASE_URL}/career-advice.html",
         f"{BASE_URL}/how-to-write-cv-kenya.html",
         f"{BASE_URL}/how-to-avoid-job-scams-kenya.html",
+        f"{BASE_URL}/career-services.html",
     ]
 
     for url in static_pages:
