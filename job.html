@@ -215,6 +215,9 @@
           return;
         }
 
+        // Record a job detail view for the JobLink Africa analytics dashboard.
+        client.from('site_events').insert({event_type:'job_open',job_id:job.id,page_path:location.pathname}).then(({error})=>{if(error)console.debug('Job view was not recorded:',error.message)});
+
         const title = firstValue(job, ['title', 'job_title'], 'Job opportunity');
         const company = firstValue(job, ['company', 'company_name', 'employer'], 'Employer not specified');
         const location = firstValue(job, ['location', 'city'], '');
