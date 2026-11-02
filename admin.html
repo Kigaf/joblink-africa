@@ -18,5 +18,14 @@
 <div class="panel-head"><div><span class="eyebrow">CUSTOMER REQUESTS</span><h2>Career service orders</h2><p class="muted">Review requests, confirm payments and manage delivery.</p></div><button id="refreshServiceOrders" class="btn light" type="button">Refresh orders</button></div>
 <div id="serviceOrderRows" class="job-rows"><p class="muted">Sign in as an authorised administrator to load orders.</p></div>
 </section>
+<section id="adsAdminPanel" class="panel admin-wrap" style="margin-top:18px" hidden>
+<div class="panel-head"><div><span class="eyebrow">REVENUE MANAGEMENT</span><h2>Advertising manager</h2><p class="muted">Create banner campaigns, activate or pause placements, and respond to advertiser enquiries.</p></div><button id="refreshAds" class="btn light" type="button">Refresh adverts</button></div>
+<div id="adsNotice" class="toast" role="status" hidden></div>
+<div class="ad-admin-grid"><section><h3>Create banner advert</h3><form id="adForm" class="ad-admin-form">
+<label>Advertiser / organisation<input id="adAdvertiser" required maxlength="180"></label><label>Banner title<input id="adTitle" required maxlength="180"></label><label>Banner image URL (HTTPS)<input id="adImage" type="url" required placeholder="https://.../banner.jpg"></label><label>Destination URL (HTTPS)<input id="adUrl" type="url" required placeholder="https://advertiser.example"></label><label>Placement<select id="adPlacement"><option value="all">All pages</option><option value="home">Homepage only</option><option value="jobs">Job pages</option><option value="career">Career advice and services</option></select></label><label>Start date<input id="adStart" type="date"></label><label>End date (optional)<input id="adEnd" type="date"></label><label>Alt text<input id="adAlt" maxlength="180"></label><label>Campaign status<select id="adStatus"><option value="draft">Draft</option><option value="active">Active</option></select></label><button class="btn primary" type="submit">Save banner advert</button><p class="muted small">Use an image URL supplied by the advertiser. Banner uploads are not enabled in this first version.</p></form></section>
+<section><h3>Live and scheduled adverts</h3><div id="adRows" class="job-rows"></div></section></div>
+<h3>Advertiser enquiries</h3><div id="requestRows" class="job-rows"></div>
+</section>
+</section>
 </main><footer><a class="footer-brand" href="index.html">JobLink Africa</a><p>Keep your login private. Never share your admin password.</p></footer>
-<script src="assets/config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="assets/admin.js"></script><script src="assets/service-orders.js"></script></body></html>
+<script src="assets/config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="assets/admin.js"></script><script src="assets/service-orders.js"></script><script src="assets/ads-admin.js"></script></body></html>
