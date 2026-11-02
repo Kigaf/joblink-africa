@@ -38,3 +38,14 @@ body.admin-body{background:#f7fafc}.admin-wrap{max-width:1320px;padding:30px 24p
 #learningRows,#adRows,#requestRows,#serviceOrderRows{max-height:560px;overflow:auto;padding-right:3px}
 @media(max-width:900px){.admin-columns{grid-template-columns:1fr}.admin-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.admin-wrap{padding:15px 10px 32px}.panel{padding:12px}.admin-form,.ad-admin-form{grid-template-columns:1fr}.admin-form>label,.admin-form>.two-col,.admin-form>.checks,.admin-form>button,.admin-form>p,.ad-admin-form label,.ad-admin-form>button,.ad-admin-form>p{grid-column:1}.admin-form>label:has(#title),.admin-form>label:has(#company),.admin-form>label:has(#categoryInput),.admin-form>label:has(#urlInput),.admin-form>label:has(#sourceInput){grid-column:1}.stats{gap:6px}.stat{padding:9px}.stat strong{font-size:20px}}
+
+
+/* Admin section navigation and overview */
+.admin-nav{position:sticky;top:0;z-index:20;display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:0 0 14px;padding:9px 10px;background:rgba(255,255,255,.96);border:1px solid #e1e8ee;border-radius:11px;box-shadow:0 5px 18px #102b460c;backdrop-filter:blur(8px)}
+.admin-nav a{display:inline-flex;align-items:center;padding:8px 11px;border-radius:7px;color:#36576b;text-decoration:none;font-size:11px;font-weight:800;white-space:nowrap}
+.admin-nav a:hover,.admin-nav a:focus{background:#eaf5f6;color:#087e8b}
+#overview,#jobFormSection,#jobsListSection,#learningAdminPanel,#serviceOrdersPanel,#adsAdminPanel{scroll-margin-top:76px}
+#overview{padding:10px 0 8px}
+#overview h2{font-size:20px}
+#overview:after{content:"Your workspace at a glance";display:block;color:#7a8b99;font-size:11px;margin-top:4px}
+@media(max-width:600px){.admin-nav{position:sticky;gap:4px;padding:7px}.admin-nav a{font-size:10px;padding:7px 8px}}
