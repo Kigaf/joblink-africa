@@ -49,3 +49,58 @@ body.admin-body{background:#f7fafc}.admin-wrap{max-width:1320px;padding:30px 24p
 #overview h2{font-size:20px}
 #overview:after{content:"Your workspace at a glance";display:block;color:#7a8b99;font-size:11px;margin-top:4px}
 @media(max-width:600px){.admin-nav{position:sticky;gap:4px;padding:7px}.admin-nav a{font-size:10px;padding:7px 8px}}
+
+
+/* Extra-compact admin layout */
+.admin-wrap{max-width:1500px;padding:14px 16px 30px}
+.admin-intro{padding:0 0 9px}
+.admin-intro h1{font-size:25px;margin:3px 0}
+.admin-intro p{font-size:11px}
+.admin-nav{margin-bottom:9px;padding:6px 8px;gap:3px}
+.admin-nav a{font-size:10px;padding:6px 9px}
+.dashboard-top{margin:3px 0 8px}
+.dashboard-top h2{font-size:17px}
+.stats{gap:7px;margin-bottom:9px}
+.stat{padding:8px 11px}
+.stat span{font-size:10px}
+.stat strong{font-size:20px}
+.panel{padding:12px;border-radius:10px}
+.panel h2,.panel-head h2{font-size:16px}
+.panel p{font-size:11px}
+.admin-columns{gap:9px}
+.admin-form{gap:7px 9px;margin-top:9px}
+.admin-form label,.two-col label,.stack-form label{font-size:10px;gap:3px}
+.admin-form input:not([type=checkbox]),.admin-form select,.admin-form textarea,.stack-form input{padding:7px 8px;font-size:11px;border-radius:6px}
+.admin-form textarea{min-height:42px;line-height:1.4}
+.two-col{gap:7px}
+.checks{padding:7px;gap:5px}
+.checks label{font-size:10px}
+.btn,.mini-btn{font-size:10px;padding:6px 9px}
+.manager-filters{grid-template-columns:minmax(0,1fr) 125px;margin:8px 0;gap:6px}
+.manager-filters input,.manager-filters select{padding:7px 8px;font-size:11px}
+.job-rows{gap:6px;max-height:560px}
+.job-row{padding:7px;gap:6px}
+.job-row h3{font-size:11px}
+.job-row p{font-size:10px}
+.analytics-panel{margin-bottom:9px}
+.analytics-panel .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+#learningAdminPanel,#serviceOrdersPanel,#adsAdminPanel{padding:12px;margin:9px 0!important}
+.ad-admin-grid{gap:9px;margin:9px 0}
+.ad-admin-form{gap:7px}
+.ad-admin-form label{font-size:10px;gap:3px}
+.ad-admin-form input,.ad-admin-form select{padding:7px;font-size:11px}
+#learningRows,#adRows,#requestRows,#serviceOrderRows{max-height:440px}
+.admin-body footer{padding:14px;font-size:11px}
+@media(max-width:760px){
+ .admin-wrap{padding:12px 9px 24px}
+ .admin-columns{grid-template-columns:1fr}
+ .admin-form{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .analytics-panel .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:480px){
+ .admin-form,.ad-admin-form{grid-template-columns:1fr}
+ .admin-form>label,.admin-form>.two-col,.admin-form>.checks,.admin-form>button,.admin-form>p,.ad-admin-form label,.ad-admin-form>button,.ad-admin-form>p{grid-column:1}
+ .analytics-panel .stats{grid-template-columns:1fr 1fr}
+ .manager-filters{grid-template-columns:1fr}
+ .admin-nav{overflow-x:auto;flex-wrap:nowrap}
+}
