@@ -57,6 +57,22 @@ def official_vacancy_records():
             seen = set()
             for anchor in soup.find_all("a", href=True):
                 title = " ".join(anchor.get_text(" ", strip=True).split())
+                # PSC rows label every detail link identically; use the position cell instead.
+                row = anchor.find_parent("tr")
+                if row:
+                    cells = row.find_all(["td", "th"], recursive=False)
+                    if len(cells) >= 3:
+                        row_title = " ".join(cells[1].get_text(" ", strip=True).split())
+                        if row_title:
+                            title = row_title
+                # For card-based pages, prefer a nearby heading over generic action text.
+                if title.lower() in {"advert details", "download pdf", "apply here", "view details", "read more"}:
+                    for parent in [anchor.parent, anchor.parent.parent if anchor.parent else None]:
+                        if parent:
+                            heading = parent.find(["h2", "h3", "h4", "h5"])
+                            if heading and heading.get_text(" ", strip=True):
+                                title = " ".join(heading.get_text(" ", strip=True).split())
+                                break
                 if not title or len(title) < 8 or len(title) > 220:
                     continue
                 if not JOB_WORDS.search(title) and not re.search(r"\b(PSC|TSC|NPSC|JSC)\b", title, re.I):
