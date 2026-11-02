@@ -41,6 +41,84 @@ create policy "Public can submit service requests" on public.service_orders
     and service_type in ('CV Revamp','Tailor-made CV + Cover Letter','LinkedIn Profile Optimisation','Interview Preparation','International Application Package')
     and order_status = 'awaiting_payment'
     and payment_status = 'pending'
+    and coalesce(mpesa_reference,'') = ''
+    and coalesce(admin_notes,'') = ''
+    and coalesce(delivery_link,'') = ''
+    and (cv_storage_path is null or cv_storage_path ~ '^[0-9a-f-]{36}/cv\\.(pdf|doc|docx)
+drop policy if exists "Admins manage service requests" on public.service_orders;
+create policy "Admins manage service requests" on public.service_orders
+  for all to authenticated
+  using (public.joblink_is_admin())
+  with check (public.joblink_is_admin());
+grant insert on public.service_orders to anon, authenticated;
+grant select, update on public.service_orders to authenticated;
+
+drop trigger if exists service_orders_set_updated_at on public.service_orders;
+create trigger service_orders_set_updated_at before update on public.service_orders
+for each row execute function public.joblink_set_updated_at();
+
+-- Private CV storage. Public visitors may upload a file but cannot list, read or download files.
+insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
+values ('career-service-cvs','career-service-cvs',false,5242880,
+  array['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+on conflict (id) do update set public=false,file_size_limit=5242880,
+  allowed_mime_types=excluded.allowed_mime_types;
+
+drop policy if exists "Visitors can upload career service CVs" on storage.objects;
+create policy "Visitors can upload career service CVs" on storage.objects
+  for insert to anon, authenticated
+  with check (bucket_id='career-service-cvs' and name ~ '^[0-9a-f-]{36}/cv\\.(pdf|doc|docx)
+drop policy if exists "Admins can read career service CVs" on storage.objects;
+create policy "Admins can read career service CVs" on storage.objects
+  for select to authenticated
+  using (bucket_id='career-service-cvs' and public.joblink_is_admin());
+drop policy if exists "Admins can delete career service CVs" on storage.objects;
+create policy "Admins can delete career service CVs" on storage.objects
+  for delete to authenticated
+  using (bucket_id='career-service-cvs' and public.joblink_is_admin());
+)
+  );
+drop policy if exists "Admins manage service requests" on public.service_orders;
+create policy "Admins manage service requests" on public.service_orders
+  for all to authenticated
+  using (public.joblink_is_admin())
+  with check (public.joblink_is_admin());
+grant insert on public.service_orders to anon, authenticated;
+grant select, update on public.service_orders to authenticated;
+
+drop trigger if exists service_orders_set_updated_at on public.service_orders;
+create trigger service_orders_set_updated_at before update on public.service_orders
+for each row execute function public.joblink_set_updated_at();
+
+-- Private CV storage. Public visitors may upload a file but cannot list, read or download files.
+insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
+values ('career-service-cvs','career-service-cvs',false,5242880,
+  array['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+on conflict (id) do update set public=false,file_size_limit=5242880,
+  allowed_mime_types=excluded.allowed_mime_types;
+
+drop policy if exists "Visitors can upload career service CVs" on storage.objects;
+create policy "Visitors can upload career service CVs" on storage.objects
+  for insert to anon, authenticated
+  with check (bucket_id='career-service-cvs');
+drop policy if exists "Admins can read career service CVs" on storage.objects;
+create policy "Admins can read career service CVs" on storage.objects
+  for select to authenticated
+  using (bucket_id='career-service-cvs' and public.joblink_is_admin());
+drop policy if exists "Admins can delete career service CVs" on storage.objects;
+create policy "Admins can delete career service CVs" on storage.objects
+  for delete to authenticated
+  using (bucket_id='career-service-cvs' and public.joblink_is_admin());
+);
+drop policy if exists "Admins can read career service CVs" on storage.objects;
+create policy "Admins can read career service CVs" on storage.objects
+  for select to authenticated
+  using (bucket_id='career-service-cvs' and public.joblink_is_admin());
+drop policy if exists "Admins can delete career service CVs" on storage.objects;
+create policy "Admins can delete career service CVs" on storage.objects
+  for delete to authenticated
+  using (bucket_id='career-service-cvs' and public.joblink_is_admin());
+)
   );
 drop policy if exists "Admins manage service requests" on public.service_orders;
 create policy "Admins manage service requests" on public.service_orders
