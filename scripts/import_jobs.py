@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Import approved RSS/Atom and ReliefWeb API job listings into Supabase as drafts."""
+"""Import approved RSS/Atom, UN Talent JSON API and ReliefWeb jobs into Supabase as drafts."""
 import hashlib
 import html
 import json
@@ -192,6 +192,57 @@ def reliefweb_records(feed):
             records.append(record)
     return records
 
+def untalent_records(feed):
+    """Read UN Talent JSON API; the open project describes fair use as free with attribution."""
+    endpoint = str(feed.get("url") or "https://untalent.org/api/v1/jobs").strip()
+    if not endpoint.startswith("https://"):
+        print("Skipping UN Talent API: endpoint must use HTTPS.")
+        return []
+    params = {}
+    for key in ("locationSlugs", "areaSlugs", "levelSlugs"):
+        if feed.get(key):
+            params[key] = str(feed[key])
+    token = str(feed.get("token") or os.environ.get("UNTALENT_API_TOKEN") or "").strip()
+    if token:
+        params["token"] = token
+    records = []
+    max_pages = max(1, min(int(feed.get("pages", 1)), 5))
+    page_size = int(feed.get("page_size", 100))
+    for page in range(1, max_pages + 1):
+        response = SESSION.get(endpoint, params={**params, "page": page}, timeout=45)
+        if not response.ok:
+            print(f"UN Talent API error ({response.status_code}): {response.text[:400]}", file=sys.stderr)
+            response.raise_for_status()
+        payload = response.json()
+        if isinstance(payload, list):
+            items = payload
+        elif isinstance(payload, dict):
+            items = payload.get("data") or payload.get("jobs") or payload.get("results") or payload.get("items") or []
+            if isinstance(items, dict):
+                items = items.get("data") or items.get("jobs") or []
+        else:
+            items = []
+        if not isinstance(items, list) or not items:
+            break
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            title = item.get("title") or item.get("name")
+            url = item.get("url") or item.get("link")
+            company = item.get("company") or item.get("organization") or item.get("employer") or ""
+            summary = item.get("description") or item.get("summary") or item.get("excerpt") or ""
+            posted = item.get("published_at") or item.get("published") or item.get("created_at") or item.get("date")
+            country = item.get("location") or item.get("country") or feed.get("country")
+            merged = {**feed, "name": feed.get("name", "UN Talent"), "country": country or "International"}
+            record = make_record(title, url, summary, posted, merged, clean(company))
+            if record:
+                record["source"] = "UN Talent"
+                record["description"] += "\\n\\nSource: UN Talent. Follow the original listing link to review the vacancy and apply."
+                records.append(record)
+        if len(items) < page_size:
+            break
+    return records
+
 def existing_urls(urls):
     found = set()
     # Avoid PostgREST in.(...) quoting problems by querying each URL exactly.
@@ -223,6 +274,8 @@ def main():
                 candidates.extend(rss_records(feed))
             elif kind == "reliefweb":
                 candidates.extend(reliefweb_records(feed))
+            elif kind in ("untalent", "untalent_api"):
+                candidates.extend(untalent_records(feed))
             else:
                 print(f"Unsupported feed type '{kind}' for {feed.get('name', 'unnamed source')}; skipped.")
         except Exception as exc:
