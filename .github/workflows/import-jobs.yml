@@ -36,4 +36,5 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           JOB_FEEDS_JSON: ${{ vars.JOB_FEEDS_JSON }}
+          RELIEFWEB_APPNAME: ${{ vars.RELIEFWEB_APPNAME }}
         run: python scripts/import_jobs.py
