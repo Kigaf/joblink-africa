@@ -4,7 +4,11 @@ create table if not exists public.learning_resources (
  title text not null check (char_length(title) between 2 and 180),
  level text not null,
  subject text not null,
- resource_type text not null default 'notes' check (resource_type in ('exam','assignment','notes','scheme','lesson_plan')),\n class_name text not null default '',\n term text check (term is null or term in ('Term 1','Term 2','Term 3')),\n academic_year integer check (academic_year is null or academic_year between 2000 and 2100),\n description text not null default '',
+ resource_type text not null default 'notes' check (resource_type in ('exam','assignment','notes','scheme','lesson_plan')),
+ class_name text not null default '',
+ term text check (term is null or term in ('Term 1','Term 2','Term 3')),
+ academic_year integer check (academic_year is null or academic_year between 2000 and 2100),
+ description text not null default '',
  price numeric(10,2) not null default 0 check (price >= 0),
  file_path text not null unique,
  status text not null default 'draft' check (status in ('draft','published','archived')),
@@ -34,4 +38,10 @@ drop policy if exists "Admins delete learning PDFs" on storage.objects;
 create policy "Admins delete learning PDFs" on storage.objects for delete to authenticated using(bucket_id='learning-pdfs' and public.joblink_is_admin());
 drop policy if exists "Read published free learning PDFs" on storage.objects;
 create policy "Read published free learning PDFs" on storage.objects for select to anon,authenticated using(bucket_id='learning-pdfs' and exists(select 1 from public.learning_resources r where r.file_path=name and r.status='published' and r.price=0));
-\n-- Safe migration for installations created before structured categories were added.\nalter table public.learning_resources add column if not exists resource_type text not null default 'notes';\nalter table public.learning_resources add column if not exists class_name text not null default '';\nalter table public.learning_resources add column if not exists term text;\nalter table public.learning_resources add column if not exists academic_year integer;\ncreate index if not exists learning_resources_category_idx on public.learning_resources(resource_type,level,subject,term,academic_year,status);\n
+
+-- Safe migration for installations created before structured categories were added.
+alter table public.learning_resources add column if not exists resource_type text not null default 'notes';
+alter table public.learning_resources add column if not exists class_name text not null default '';
+alter table public.learning_resources add column if not exists term text;
+alter table public.learning_resources add column if not exists academic_year integer;
+create index if not exists learning_resources_category_idx on public.learning_resources(resource_type,level,subject,term,academic_year,status);
