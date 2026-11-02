@@ -120,3 +120,39 @@ The public `advertise.html` page accepts direct advertising enquiries. The admin
 The migration uses the existing `public.joblink_is_admin()` and `public.joblink_set_updated_at()` helper functions. It does not alter existing jobs, login, service orders or authentication. The enquiry form and banner delivery will not work until the SQL migration has been run successfully.
 
 Only display truthful, relevant advertisements. Obtain permission to use advertiser images, disclose sponsored content, and agree campaign dates and payment terms in writing. Banner images are currently referenced by HTTPS URL; image uploads and impression/click analytics are not included in this first release.
+
+
+## JobLink AI assistant
+
+The public `ai.html` page provides an AI assistant for CV guidance, cover letters, job applications, interview practice, career development and school learning. It calls the `joblink-ai` Supabase Edge Function. The OpenAI API key is used only on the server and must never be placed in GitHub Pages files.
+
+### Configure and deploy
+
+1. In the OpenAI API platform, create an API key and set any spending limits you need: https://platform.openai.com/api-keys
+2. Install and sign in to the Supabase CLI, then link this repository's Supabase project:
+   ```sh
+   supabase login
+   supabase link --project-ref ltwnjnrxqdexnwlixpgt
+   ```
+3. Set the OpenAI key as a Supabase secret (replace the value locally; do not commit it):
+   ```sh
+   supabase secrets set OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+   ```
+   Optional model override:
+   ```sh
+   supabase secrets set OPENAI_MODEL=gpt-5.4-mini
+   ```
+4. Deploy the function:
+   ```sh
+   supabase functions deploy joblink-ai
+   ```
+5. Open https://kigaf.github.io/joblink-africa/ai.html and test a short question in English and Kiswahili.
+
+### Important AI security and cost notes
+
+- The function uses the OpenAI Responses API and keeps the OpenAI key in Supabase secrets. Never put it in `assets/config.js`, HTML, browser JavaScript or GitHub Actions logs.
+- The function is intentionally callable by public visitors, so it currently has basic request validation and an origin check but **does not yet have persistent per-user/IP rate limiting, CAPTCHA, or a paid-user quota**. Before promoting it widely, add abuse protection and monitor API usage/spending limits in the OpenAI platform.
+- The browser conversation is held in page memory and is not saved to the JobLink database. The function sends `store: false` to the OpenAI Responses API.
+- Users should not submit passwords, national ID numbers, financial details, M-PESA PINs or sensitive documents.
+- AI output can be wrong. Users must verify vacancy details and application instructions with the original employer. The assistant does not search JobLink's live vacancies or guarantee hiring, sponsorship or visa outcomes.
+- The assistant's AI requests may incur OpenAI API charges separate from a ChatGPT subscription.
