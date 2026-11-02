@@ -45,6 +45,7 @@ create policy "Public can submit service requests" on public.service_orders
     and coalesce(admin_notes,'') = ''
     and coalesce(delivery_link,'') = ''
     and (cv_storage_path is null or cv_storage_path ~ '^[0-9a-f-]{36}/cv[.](pdf|doc|docx)$')
+  );
 drop policy if exists "Admins manage service requests" on public.service_orders;
 create policy "Admins manage service requests" on public.service_orders
   for all to authenticated
