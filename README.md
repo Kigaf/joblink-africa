@@ -77,3 +77,28 @@ Replace the placeholder contact email (`hello@example.com`), update privacy/term
 - **Sign-in works but job access fails:** insert the exact auth user UUID into `public.admin_users` and confirm `supabase/schema.sql` ran successfully.
 - **Jobs do not show publicly:** ensure status is `published`, the deadline is blank or not past, and Supabase URL/key are correct. Check browser developer console for connection errors.
 - **Permission denied:** confirm RLS is enabled and the supplied SQL policies exist. Do not solve this by exposing the service-role key.
+
+
+## Career services and customer orders
+
+The public `career-services.html` page accepts requests for CV revamps, tailored CVs and cover letters, LinkedIn profile optimisation, interview preparation and international application support. It does not display prices or collect payment. It records a request so an administrator can contact the customer with service details and payment instructions.
+
+### Enable career services
+
+1. Open Supabase SQL Editor.
+2. Open `supabase/career-services.sql` in this repository, copy the full script and run it.
+3. Confirm the script completes successfully. It creates the service order table, access policies and a private CV-upload bucket for PDF and Word documents up to 5 MB.
+4. Submit a test request on the public website. Use test contact details and a non-sensitive sample document, or test without an attachment.
+5. Sign in to `admin.html` with an authorised administrator account. The Career service orders panel is available to authorised admins.
+6. Review requests, independently confirm payments, update order and payment statuses, add internal notes and optionally add a delivery link.
+
+### Operating and privacy notes
+
+- A submitted request is not a payment and does not mean work has started. Confirm the service, payment instructions and delivery expectations with the customer first.
+- No prices or payment amounts are displayed by the request page.
+- Never request an M-PESA PIN, bank password, card PIN or one-time verification code. Confirm payments through your own official payment account before marking an order as paid.
+- CV files are stored in a private bucket. Visitors can upload but cannot list, read or download files. Authorised admins can create short-lived signed links to review them.
+- Do not share CVs with employers without the customer's explicit permission. Delete files when no longer needed, subject to legitimate record-keeping needs.
+- The service form and admin order panel will not work until `supabase/career-services.sql` has been run successfully.
+- Replace the placeholder public contact email with a monitored business email before promoting the service. Review the privacy notice against your actual practices.
+- Agree on turnaround times, revision limits and cancellation/refund terms before accepting payment. Do not guarantee employment, interviews or visa sponsorship.
