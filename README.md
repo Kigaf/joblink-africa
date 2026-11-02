@@ -102,3 +102,21 @@ The public `career-services.html` page accepts requests for CV revamps, tailored
 - The service form and admin order panel will not work until `supabase/career-services.sql` has been run successfully.
 - Replace the placeholder public contact email with a monitored business email before promoting the service. Review the privacy notice against your actual practices.
 - Agree on turnaround times, revision limits and cancellation/refund terms before accepting payment. Do not guarantee employment, interviews or visa sponsorship.
+
+
+## Advertising and sponsored campaigns
+
+The public `advertise.html` page accepts direct advertising enquiries. The admin advertising manager can create banner campaigns using advertiser-supplied HTTPS image and destination URLs, select homepage/job/career placements, schedule dates, and activate, pause or delete campaigns. Public pages display active campaigns only. The existing `jobs.featured` field is used to identify sponsored/featured job listings.
+
+### Enable advertising
+
+1. Open Supabase SQL Editor and run the complete `supabase/advertising.sql` migration.
+2. Wait for GitHub Pages to deploy the latest commit.
+3. Open `advertise.html` and submit a test enquiry.
+4. Sign in to `admin.html`; the Advertising manager appears below Career service orders.
+5. Review enquiries, then contact advertisers directly. Create a banner using an HTTPS image URL and advertiser destination URL. Save as Draft, verify the image and destination, then activate when approved.
+6. For a sponsored vacancy, edit the vacancy in the existing job manager and select **Feature this listing**. Publish only verified jobs and clearly identify any paid placement.
+
+The migration uses the existing `public.joblink_is_admin()` and `public.joblink_set_updated_at()` helper functions. It does not alter existing jobs, login, service orders or authentication. The enquiry form and banner delivery will not work until the SQL migration has been run successfully.
+
+Only display truthful, relevant advertisements. Obtain permission to use advertiser images, disclose sponsored content, and agree campaign dates and payment terms in writing. Banner images are currently referenced by HTTPS URL; image uploads and impression/click analytics are not included in this first release.
