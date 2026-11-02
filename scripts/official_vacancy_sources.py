@@ -17,6 +17,12 @@ OFFICIAL_KE_SOURCES = [
     {"name": "Teachers Service Commission (TSC)", "url": "https://recruitment.tsc.go.ke/", "domain": "tsc.go.ke"},
     {"name": "Ministry of Defence (MOD)", "url": "https://www.mod.go.ke/category/jobs/", "domain": "mod.go.ke"},
     {"name": "Kenyan Ministries & Public Agencies (Government Advertising Agency)", "url": "https://www.gaa.go.ke/job-adverts", "domain": "gaa.go.ke"},
+    {"name": "Safaricom PLC", "url": "https://egjd.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/jobs", "domain": "egjd.fa.us6.oraclecloud.com"},
+    {"name": "KCB Group", "url": "https://kcbgroup.com/careers", "domain": "kcbgroup.com"},
+    {"name": "Kenya Airways", "url": "https://careers.kenya-airways.com/", "domain": "careers.kenya-airways.com"},
+    {"name": "Central Bank of Kenya", "url": "https://careers.centralbank.go.ke/", "domain": "careers.centralbank.go.ke"},
+    {"name": "Airtel Kenya", "url": "https://www.airtelkenya.com/ke/about/Careers", "domain": "airtelkenya.com"},
+    {"name": "AirKenya", "url": "https://airkenya.com/careers/", "domain": "airkenya.com"},
 ]
 
 JOB_WORDS = re.compile(r"\b(vacanc(?:y|ies)|job|career|recruit|position|advert|internship|employment|shortlist)\b", re.I)
