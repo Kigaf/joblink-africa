@@ -70,6 +70,7 @@ def build_sitemap(jobs):
         f"{BASE_URL}/",
         f"{BASE_URL}/privacy.html",
         f"{BASE_URL}/terms.html",
+        f"{BASE_URL}/career-advice.html",
     ]
 
     for url in static_pages:
