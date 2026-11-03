@@ -6,12 +6,41 @@
   <meta name='impact-site-verification' value='84a9dda2-7963-4c86-9f97-6efeedfcdef7'>
   <title>JobLink Africa — Find a job. Build your future.</title>
   <link rel="stylesheet" href="assets/style.css">
+<style>
+.main-nav{display:flex;align-items:center;gap:clamp(10px,1.5vw,22px);flex-wrap:wrap}
+.main-nav>a,.nav-more>summary{font-size:13px;font-weight:700;color:#29475e;text-decoration:none;white-space:nowrap}
+.main-nav>a:hover,.nav-more>summary:hover{color:#087e8b}
+.nav-more{position:relative}
+.nav-more>summary{list-style:none;cursor:pointer;padding:9px 12px;border:1px solid #dce5ec;border-radius:9px;background:#fff}
+.nav-more>summary::-webkit-details-marker{display:none}
+.nav-dropdown{position:absolute;right:0;top:calc(100% + 9px);z-index:1200;min-width:215px;padding:8px;background:#fff;border:1px solid #e1e8ee;border-radius:12px;box-shadow:0 14px 35px #102b4620;display:grid;gap:2px}
+.nav-dropdown a{display:block;padding:10px 12px;border-radius:7px;color:#29475e;text-decoration:none;font-size:13px;font-weight:600}
+.nav-dropdown a:hover{background:#f0f6f7;color:#087e8b}
+@media(max-width:760px){.main-nav{gap:7px 12px}.main-nav>a,.nav-more>summary{font-size:12px}.nav-dropdown{right:0;max-width:min(260px,85vw)}}
+</style>
   <style>.visual-showcase{max-width:1180px;margin:46px auto;padding:0 22px}.visual-intro{max-width:720px;margin-bottom:22px}.visual-intro h2{font-size:clamp(1.7rem,3vw,2.35rem);margin:8px 0;color:#102b46}.visual-intro p{color:#5c6d7c;line-height:1.7}.visual-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.visual-card{display:block;overflow:hidden;border:1px solid #e1e8ee;border-radius:17px;background:#fff;color:#102b46;text-decoration:none;box-shadow:0 8px 25px #102b460d;transition:transform .2s,box-shadow .2s}.visual-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px #102b461a}.visual-card img{display:block;width:100%;aspect-ratio:1.72;object-fit:cover;background:#eaf1f6}.visual-card span{display:grid;gap:6px;padding:16px 18px}.visual-card b{font-size:1.12rem}.visual-card small{color:#607080;line-height:1.5}@media(max-width:760px){.visual-cards{grid-template-columns:1fr}.visual-card img{aspect-ratio:1.8}.visual-showcase{margin:30px auto}}</style>
 </head>
 <body>
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="JobLink Africa home"><span class="logo">JL</span><span>JobLink <b>Africa</b><small>Your next opportunity starts here</small></span></a>
-  <nav><a href="#jobs">Find jobs</a><a href="#categories">Categories</a><a href="career-advice.html">Career advice</a><a href="blog.html">Blog</a><a href="business-start.html">Start a business</a><a href="business-community.html">Business community</a><a href="ai.html">JobLink AI</a><a href="resources.html">Learning Resources</a><a href="learning-resources.html">Free learning</a><a href="premium-resources.html">Premium materials</a><a href="learning-resources.html#subjectQuickLinks">Other materials</a><a href="career-services.html">CV services</a><a href="account.html">My Account</a><a href="advertise.html">Advertise</a><a href="#about">About</a><a href="account.html">My Account</a><a href="admin.html">Admin</a></nav>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="#jobs">Find Jobs</a>
+    <a href="career-advice.html">Career Advice</a>
+    <a href="blog.html">Blog</a>
+    <a href="account.html">My Account</a>
+    <details class="nav-more"><summary>More <span aria-hidden="true">▾</span></summary>
+      <div class="nav-dropdown">
+        <a href="business-start.html">Start a Business</a>
+        <a href="business-community.html">Business Community</a>
+        <a href="ai.html">JobLink AI</a>
+        <a href="resources.html">Learning Centre</a>
+        <a href="career-services.html">CV & Career Services</a>
+        <a href="advertise.html">Advertise</a>
+        <a href="#about">About Us</a>
+        <a href="admin.html">Admin Login</a>
+      </div>
+    </details>
+  </nav>
 </header>
 <main>
   <section class="hero">
