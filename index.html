@@ -5,7 +5,7 @@
   <meta name="description" content="Explore jobs in Kenya and abroad, including remote work, internships and international opportunities.">
   <meta name='impact-site-verification' value='84a9dda2-7963-4c86-9f97-6efeedfcdef7'>
   <title>JobLink Africa — Find a job. Build your future.</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css">\n  <link rel="manifest" href="manifest.webmanifest">\n  <meta name="theme-color" content="#102b46">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n  <link rel="icon" href="assets/pwa-icon.svg" type="image/svg+xml">\n  <link rel="apple-touch-icon" href="assets/pwa-icon.svg">
 <style>
 .main-nav{display:flex;align-items:center;gap:clamp(10px,1.5vw,22px);flex-wrap:wrap}
 .main-nav>a,.nav-more>summary{font-size:13px;font-weight:700;color:#29475e;text-decoration:none;white-space:nowrap}
@@ -83,5 +83,5 @@
 <script src="assets/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/app.js"></script>
-<script src="assets/advertisements.js"></script>
+<script src="assets/advertisements.js"></script>\n<script>\n(()=>{\n if ("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(err=>console.warn("PWA service worker registration failed:",err)));\n const btn=document.getElementById("pwaInstallButton"),help=document.getElementById("pwaInstallHelp");if(!btn)return;let promptEvent=null;\n window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();promptEvent=e;btn.hidden=false;});\n btn.addEventListener("click",async()=>{if(promptEvent){promptEvent.prompt();const choice=await promptEvent.userChoice;help.textContent=choice.outcome==="accepted"?"JobLink Africa is being installed.": "You can install it whenever you are ready.";promptEvent=null;}else{help.textContent=/iphone|ipad|ipod/i.test(navigator.userAgent)?"On Safari, tap Share, then Add to Home Screen.":"Open your browser menu and choose Install app or Add to Home screen.";}});\n window.addEventListener("appinstalled",()=>{help.textContent="JobLink Africa has been installed.";btn.hidden=true;});\n if(window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone){btn.hidden=true;help.textContent="You are using the installed app.";}\n})();\n</script>
 </body></html>
